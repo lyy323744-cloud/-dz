@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sahla dz</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5faff;
+  text-align:center;
+  color:#222;
+}
+
+h1{
+  color:#1e88e5;
+  margin-top:15px;
+}
+
+h2{
+  margin:20px 0 10px;
+  color:#1e88e5;
+}
+
+/* ===== COUNTDOWN ===== */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:20px 0;
+}
+
+.time-box{
+  background:#1e88e5;
+  color:white;
+  width:70px;
+  padding:10px 0;
+  border-radius:12px;
+}
+
+.time-box span{
+  display:block;
+  font-size:28px;
+  font-weight:bold;
+}
+
+.time-box small{
+  font-size:12px;
+}
+
+/* ===== SLIDER ===== */
+.slider{
+  width:90%;
+  max-width:400px;
+  margin:20px auto;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.slides{
+  display:flex;
+  transition:0.4s ease;
+}
+
+.slides img{
+  width:100%;
+  flex-shrink:0;
+}
+
+/* ===== FORM ===== */
+.form-box{
+  width:90%;
+  max-width:400px;
+  margin:auto;
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:25px;
+  border:2px solid #1e88e5;
+  font-size:16px;
+  transition:0.2s;
+}
+
+input:focus,select:focus{
+  outline:none;
+  transform:scale(1.03);
+  border-color:#1565c0;
+}
+
+.price{
+  font-size:20px;
+  margin:10px 0;
+  color:#1e88e5;
+  font-weight:bold;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  background:white;
+  color:#1e88e5;
+  border:2px solid #1e88e5;
+  border-radius:25px;
+  font-size:18px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:active{
+  background:#1e88e5;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>sahla dz – آمنة وسريعة</h1>
+
+<!-- COUNTDOWN -->
+<div class="countdown">
+  <div class="time-box"><span id="h">48</span><small>ساعة</small></div>
+  <div class="time-box"><span id="m">00</span><small>دقيقة</small></div>
+  <div class="time-box"><span id="s">00</span><small>ثانية</small></div>
+</div>
+
+<!-- SLIDER -->
+<div class="slider" id="slider">
+  <div class="slides" id="slides">
+    <img src="img1.jpeg">
+    <img src="img2.jpeg">
+    <img src="img3.jpeg">
+  </div>
+</div>
+
+<div class="form-box">
+
+<h2>اختر الكمية</h2>
+
+<select id="qty">
+  <option value="1">1 قطعة</option>
+  <option value="2">2 قطعة</option>
+  <option value="3">3 قطع</option>
+</select>
+
+<div class="price" id="price">السعر: 1500 DA</div>
+
+<input type="text" placeholder="الاسم">
+<input type="text" placeholder="اللقب">
+<input type="tel" placeholder="رقم الهاتف">
+
+<select>
+  <option>اختر الولاية</option>
+  <option>01 أدرار</option>
+  <option>16 الجزائر</option>
+  <option>31 وهران</option>
+  <option>58 المنيعة</option>
+</select>
+
+<button>اطلب الآن</button>
+
+</div>
+
+<script>
+/* ===== SLIDER TOUCH ===== */
+let index=0;
+const slides=document.getElementById("slides");
+let startX=0;
+
+slider.addEventListener("touchstart",e=>{
+  startX=e.touches[0].clientX;
+});
+
+slider.addEventListener("touchend",e=>{
+  let endX=e.changedTouches[0].clientX;
+  if(startX-endX>50) index++;
+  if(endX-startX>50) index--;
+  if(index<0) index=0;
+  if(index>2) index=2;
+  slides.style.transform=`translateX(-${index*100}%)`;
+});
+
+/* ===== PRICE CHANGE ===== */
+const prices={1:1500,2:2800,3:3900};
+document.getElementById("qty").addEventListener("change",e=>{
+  document.getElementById("price").innerText=
+  "السعر: "+prices[e.target.value]+" DA";
+});
+
+/* ===== COUNTDOWN ===== */
+let total=48*60*60;
+setInterval(()=>{
+  if(total<=0) return;
+  total--;
+  let h=Math.floor(total/3600);
+  let m=Math.floor((total%3600)/60);
+  let s=total%60;
+  hEl.textContent=h;
+  mEl.textContent=String(m).padStart(2,"0");
+  sEl.textContent=String(s).padStart(2,"0");
+},1000);
+
+const hEl=document.getElementById("h");
+const mEl=document.getElementById("m");
+const sEl=document.getElementById("s");
+</script>
+
+</body>
+  </html>
